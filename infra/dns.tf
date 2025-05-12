@@ -8,5 +8,5 @@ resource "azurerm_dns_cname_record" "www" {
   zone_name           = azurerm_dns_zone.root.name
   resource_group_name = azurerm_dns_zone.root.resource_group_name
   ttl                 = 300
-  record              = azurerm_static_site.site.default_host_name
+  record              = azurerm_static_web_app.site.default_host_name
 }
