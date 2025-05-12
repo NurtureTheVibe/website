@@ -1,0 +1,19 @@
+name: infra
+on:
+  push:
+    branches: [master]
+    paths: ['infra/**', '.github/workflows/infra.yml']
+
+jobs:
+  apply:
+    permissions: { id-token: write, contents: read }
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=infra init
+      - run: terraform -chdir=infra apply -auto-approve
+        env:
+          ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB_ID }}
+          ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
