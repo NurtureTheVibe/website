@@ -1,7 +1,7 @@
 variable "location" {
   description = "Azure region to deploy resources in"
   type        = string
-  default     = "uksouth"
+  default     = "westeurope"
 }
 
 variable "tenant_id" {
