@@ -8,13 +8,3 @@ resource "azurerm_dns_a_record" "apex_alias" {
 
   target_resource_id  = azurerm_static_web_app.site.id              # magic bit
 }
-
-# (Optional) IPv6 – not strictly required for SSL
-resource "azurerm_dns_aaaa_record" "apex_alias_ipv6" {
-  name                = "@"
-  zone_name           = azurerm_dns_zone.root.name
-  resource_group_name = azurerm_dns_zone.root.resource_group_name
-  ttl                 = 60
-
-  target_resource_id  = azurerm_static_web_app.site.id
-}
