@@ -49,7 +49,9 @@ jobs:
       - name: Resize & Convert to WebP
         working-directory: site/public
         run: |
-          find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -exec sharp {} --resize 1200 --format webp --output "{dir}/{name}.webp" \;
+          find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f | while read -r img; do
+            sharp "$img" --resize 1200 --format webp --output "${img%.*}.webp"
+          done
 
       # Optimize original images (fallback formats)
       - name: Optimize fallback images
