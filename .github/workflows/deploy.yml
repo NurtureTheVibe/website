@@ -58,22 +58,7 @@ jobs:
               sharp -i "$img" -o "${img%.*}.webp" -f webp
             fi
           done
-      
-      - name: Conditional Resize & Convert to WebP
-        working-directory: site/public
-        run: |
-          find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f | while read -r img; do
-            width=$(sharp metadata "$img" --format json | jq '.width')
-            if [ "$width" -gt 1200 ]; then
-              echo "Resizing $img from ${width}px to 1200px width"
-              sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200
-            else
-              echo "Skipping resize for $img (${width}px), converting directly to webp"
-              sharp -i "$img" -o "${img%.*}.webp" -f webp
-            fi
-          done
 
-      # Optimize original images (fallback formats)
       - name: Optimize fallback images
         working-directory: site/public
         run: |

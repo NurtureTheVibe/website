@@ -11,5 +11,9 @@
 {% endblock extra_head %}
 
 {% block logo_content %}
-  <img src="{{ get_url(path='images/logo.png') }}" alt="{{ config.title }}" style="height: 60px;">
+  <picture>
+    <source srcset="{{ get_url(path='images/logo.webp') }}" type="image/webp">
+    <source srcset="{{ get_url(path='images/logo.png') }}" type="image/png">
+    <img src="{{ get_url(path='images/logo.png') }}" alt="{{ config.title }}" style="height: 60px;">
+  </picture>
 {% endblock logo_content %}
