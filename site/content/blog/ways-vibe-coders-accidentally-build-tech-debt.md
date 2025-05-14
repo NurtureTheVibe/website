@@ -1,6 +1,7 @@
 +++
 title = "10 Ways Vibe Coders Accidentally Build Tech Debt (And How to Dodge It)"
-date = 2025-05-14
+date = 2025-05-14T11:05:00
+weight = 1
 template = "post.html"
 [taxonomies]
 tags = [
