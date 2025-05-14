@@ -45,12 +45,13 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      # Deploy to Azure Static Web Apps using Azure CLI
-      - name: Deploy to Azure Static Web Apps
-        working-directory: site
-        run: |
-          az staticwebapp upload \
-            --name $AZURE_SWA_NAME \
-            --resource-group $AZURE_RESOURCE_GROUP \
-            --source ./public \
-            --output-location /
+      # Official Azure SWA deployment action
+      - name: Deploy to Azure Static Web App
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: "" # intentionally blank for OIDC deployments
+          action: "upload"
+          app_location: "site/public"
+          skip_app_build: true
+          swa_name: ${{ env.AZURE_SWA_NAME }}
+          resource_group: ${{ env.AZURE_RESOURCE_GROUP }}
