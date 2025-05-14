@@ -43,7 +43,7 @@ jobs:
       - name: Install image tools
         run: |
           sudo apt-get update && sudo apt-get install -y graphicsmagick
-          npm install -g sharp-cli imagemin-cli imagemin-mozjpeg imagemin-pngquant imagemin-svgo imagemin-gifsicle imagemin-webp
+          npm install -g sharp-cli
 
       - name: Conditional Resize & Convert to WebP
         working-directory: site/public
@@ -52,22 +52,14 @@ jobs:
             width=$(gm identify -format "%w" "$img")
             if [ "$width" -gt 1200 ]; then
               echo "Resizing $img from ${width}px to 1200px width"
-              sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200
+              sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200 --optimize
+              sharp -i "$img" -o "$img" resize 1200 --optimize
             else
               echo "Skipping resize for $img (${width}px), converting directly to webp"
-              sharp -i "$img" -o "${img%.*}.webp" -f webp
+              sharp -i "$img" -o "${img%.*}.webp" -f webp --optimize
+              sharp -i "$img" -o "$img" --optimize
             fi
           done
-
-      - name: Optimize fallback images
-        working-directory: site/public
-        run: |
-          imagemin "**/*.{jpg,jpeg,png,gif,svg}" \
-            --plugin=mozjpeg \
-            --plugin=pngquant \
-            --plugin=svgo \
-            --plugin=gifsicle \
-            --out-dir=.
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
