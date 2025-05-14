@@ -1,0 +1,13 @@
+{% extends "page.html" %}
+
+{% import "macros/post.html" as t_macros %}
+{% import "macros/hero-image.html" as macros %}
+
+{% block content %}
+    <div class="post">
+        {{ t_macros::header(page=page) }}
+        {{ macros::hero_image(page=page) }}
+        {{ t_macros::content(page=page, summary=false, show_only_description=false) }}
+        {{ t_macros::earlier_later(page=page) }}
+    </div>
+{% endblock content %}

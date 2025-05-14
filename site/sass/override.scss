@@ -1,0 +1,64 @@
+// Import theme variables first (from terminimal)
+@import "../themes/terminimal/sass/variables";
+
+// Brand-specific color overrides
+$color-primary: #2DB674;      // Nurturing Green
+$color-secondary: #FFC83D;    // Vibe Gold
+$color-accent: #0E5D3B;       // Circuit Green Dark
+$color-dark-neutral: #032B23; // Dark Neutral
+$color-light-neutral: #FFFFFF; // White
+
+// Typography overrides
+$font-family-display: 'Inter', sans-serif;
+$font-family-body: 'Space Grotesk', sans-serif;
+$font-family-code: 'JetBrains Mono', monospace;
+
+// Now import the rest of the theme's Sass files
+@import "../themes/terminimal/sass/main";
+
+// Custom overrides for Terminimal elements
+body {
+  background-color: $color-dark-neutral;
+  color: $color-light-neutral;
+  font-family: $font-family-body;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-display;
+  color: $color-primary;
+}
+
+a {
+  color: $color-secondary;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+// Buttons / CTA styles (if applicable)
+.btn, button, .button {
+  background-color: $color-secondary;
+  color: $color-dark-neutral;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-light-neutral;
+  }
+}
+
+// Header and footer customizations
+.site-header, .site-footer {
+  background-color: $color-dark-neutral;
+  color: $color-light-neutral;
+
+  a {
+    color: $color-primary;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+}

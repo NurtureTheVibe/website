@@ -1,0 +1,10 @@
+{% extends "page.html" %}
+
+{% import "macros/post.html" as t_macros %}
+
+{% block content %}
+    <div class="post">
+        {{ t_macros::header(page=page) }}
+        {{ t_macros::content(page=page, summary=false, show_only_description=false) }}
+    </div>
+{% endblock content %}

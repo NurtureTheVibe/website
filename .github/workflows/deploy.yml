@@ -1,0 +1,56 @@
+name: Deploy Zola to Azure SWA (OIDC)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'infra/**'
+      - '.github/workflows/infra.yml'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CLIENT_ID:       ${{ secrets.AZ_CLIENT_ID }}
+      AZURE_TENANT_ID:       ${{ secrets.AZ_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB_ID }}
+      AZURE_RESOURCE_GROUP:  rg-static-vibe
+      AZURE_SWA_NAME:        swapp-vibe-ntv-ooga
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # Set up Zola
+      - name: Install Zola
+        uses: taiki-e/install-action@v2
+        with:
+          tool: zola
+
+      # Build Zola site
+      - name: Build site
+        working-directory: site
+        run: zola build
+
+      # Log in to Azure via OIDC
+      - name: Azure Login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      # Deploy to Azure Static Web Apps using Azure CLI
+      - name: Deploy to Azure Static Web Apps
+        working-directory: site
+        run: |
+          az staticwebapp upload \
+            --name $AZURE_SWA_NAME \
+            --resource-group $AZURE_RESOURCE_GROUP \
+            --source ./public \
+            --output-location /

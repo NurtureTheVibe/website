@@ -1,0 +1,9 @@
+{% macro hero_image(page) %}
+  {% if page.extra.hero_image %}
+    <p>
+      <a href="{{ page.permalink }}">
+        <img src="{{ page.extra.hero_image }}" alt="{{ page.title }}" class="hero-img">
+      </a>
+    </p>
+  {% endif %}
+{% endmacro %}

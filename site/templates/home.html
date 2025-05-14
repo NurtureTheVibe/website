@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% import "macros/post.html" as t_macros %}
+{% import "macros/hero-image.html" as macros %}
+
+{% block content %}
+  {% set blog = get_section(path="blog/_index.md") %}
+
+  <div class="post-list">
+    {% for page in blog.pages %}
+      <div class="post">
+        {{ t_macros::header(page=page) }}
+        {{ macros::hero_image(page=page) }}
+        <p>{{ page.extra.summary | safe }}</p>
+        <a class="read-more" href="{{ page.permalink }}">Read more →</a>
+      </div>
+    {% endfor %}
+
+    {% if paginator %}
+    <nav>
+      {% if paginator.previous %}
+        <a href="{{ paginator.previous }}">← Newer</a>
+      {% endif %}
+      {% if paginator.next %}
+        <a href="{{ paginator.next }}">Older →</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+  </div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "terminimal/templates/index.html" %}
+
+{% block extra_head %}
+  <!-- Custom Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  
+  <!-- Custom override CSS -->
+  <link rel="stylesheet" href="{{ get_url(path='override.css') }}">
+{% endblock extra_head %}
+
+{% block logo_content %}
+  <img src="{{ get_url(path='images/logo.png') }}" alt="{{ config.title }}" style="height: 60px;">
+{% endblock logo_content %}
