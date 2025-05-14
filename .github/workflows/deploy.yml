@@ -35,6 +35,33 @@ jobs:
         working-directory: site
         run: zola build
 
+      # Install Node.js for image optimization & resizing
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install Sharp CLI & imagemin
+      - name: Install image tools
+        run: npm install -g sharp-cli imagemin-cli imagemin-mozjpeg imagemin-pngquant imagemin-svgo imagemin-gifsicle imagemin-webp
+
+      # Resize large images (>1200px width) & convert to WebP
+      - name: Resize & Convert to WebP
+        working-directory: site/public
+        run: |
+          find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -exec sharp {} --resize 1200 --format webp --output "{dir}/{name}.webp" \;
+
+      # Optimize original images (fallback formats)
+      - name: Optimize fallback images
+        working-directory: site/public
+        run: |
+          imagemin "**/*.{jpg,jpeg,png,gif,svg}" \
+            --plugin=mozjpeg \
+            --plugin=pngquant \
+            --plugin=svgo \
+            --plugin=gifsicle \
+            --out-dir=.
+
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
