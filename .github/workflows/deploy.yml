@@ -35,22 +35,42 @@ jobs:
         working-directory: site
         run: zola build
 
-      # Install Node.js for image optimization & resizing
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # Install Sharp CLI & imagemin
       - name: Install image tools
-        run: npm install -g sharp-cli imagemin-cli imagemin-mozjpeg imagemin-pngquant imagemin-svgo imagemin-gifsicle imagemin-webp
+        run: |
+          sudo apt-get update && sudo apt-get install -y graphicsmagick
+          npm install -g sharp-cli imagemin-cli imagemin-mozjpeg imagemin-pngquant imagemin-svgo imagemin-gifsicle imagemin-webp
 
-      # Resize large images (>1200px width) & convert to WebP
-      - name: Resize & Convert to WebP
+      - name: Conditional Resize & Convert to WebP
         working-directory: site/public
         run: |
           find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f | while read -r img; do
-            sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200
+            width=$(gm identify -format "%w" "$img")
+            if [ "$width" -gt 1200 ]; then
+              echo "Resizing $img from ${width}px to 1200px width"
+              sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200
+            else
+              echo "Skipping resize for $img (${width}px), converting directly to webp"
+              sharp -i "$img" -o "${img%.*}.webp" -f webp
+            fi
+          done
+      
+      - name: Conditional Resize & Convert to WebP
+        working-directory: site/public
+        run: |
+          find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f | while read -r img; do
+            width=$(sharp metadata "$img" --format json | jq '.width')
+            if [ "$width" -gt 1200 ]; then
+              echo "Resizing $img from ${width}px to 1200px width"
+              sharp -i "$img" -o "${img%.*}.webp" -f webp resize 1200
+            else
+              echo "Skipping resize for $img (${width}px), converting directly to webp"
+              sharp -i "$img" -o "${img%.*}.webp" -f webp
+            fi
           done
 
       # Optimize original images (fallback formats)
