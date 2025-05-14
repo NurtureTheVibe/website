@@ -50,7 +50,7 @@ jobs:
         working-directory: site/public
         run: |
           find . \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f | while read -r img; do
-            sharp resize --width 1200 --format webp --output "${img%.*}.webp" "$img"
+            sharp resize "$img" --width 1200 --format webp --output "${img%.*}.webp"
           done
 
       # Optimize original images (fallback formats)
