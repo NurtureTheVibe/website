@@ -15,11 +15,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      AZURE_CLIENT_ID:       ${{ secrets.AZ_CLIENT_ID }}
-      AZURE_TENANT_ID:       ${{ secrets.AZ_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB_ID }}
-      AZURE_RESOURCE_GROUP:  rg-static-vibe
-      AZURE_SWA_NAME:        swapp-vibe-ntv-ooga
+      AZURE_SWA_DEPLOYMENT_TOKEN: ${{ secrets.AZ_SWA_DEPLOYMENT_TOKEN }}
+      AZURE_RESOURCE_GROUP:       rg-static-vibe
+      AZURE_SWA_NAME:             swapp-vibe-ntv-ooga
 
     steps:
       - uses: actions/checkout@v4
@@ -37,20 +35,12 @@ jobs:
         working-directory: site
         run: zola build
 
-      # Log in to Azure via OIDC
-      - name: Azure Login via OIDC
-        uses: azure/login@v2
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          client-id: ${{ env.AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
-
-      # Official Azure SWA deployment action
-      - name: Deploy via Azure CLI
-        working-directory: site
-        run: |
-          az staticwebapp deploy \
-            --name $AZURE_SWA_NAME \
-            --resource-group $AZURE_RESOURCE_GROUP \
-            --source ./public \
-            --output-location /
+          azure_static_web_apps_api_token: ${{ env.AZURE_SWA_DEPLOYMENT_TOKEN }}
+          action: "upload"
+          app_location: "site/public"
+          skip_app_build: true
+          swa_name: ${{ env.AZURE_SWA_NAME }}
+          resource_group: ${{ env.AZURE_RESOURCE_GROUP }}
