@@ -26,7 +26,8 @@ menu_items = [
     {name = "about", url = "$BASE_URL/about"},
     {name = "github", url = "https://github.com/NurtureTheVibe", newtab = true},
     {name = "x", url = "https://x.com/NurtureTheVibe", newtab = true},
-    {name = "youtube", url = "https://www.youtube.com/@NurturetheVibe", newtab = true}
+    {name = "youtube", url = "https://www.youtube.com/@NurturetheVibe", newtab = true},
+    {name = "linkedin", url = "https://www.linkedin.com/groups/13248013/", newtab = true}
 ]
 enable_post_view_navigation = true
 post_view_navigation_prompt = "Read more"
