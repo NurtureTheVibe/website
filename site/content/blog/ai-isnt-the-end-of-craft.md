@@ -5,6 +5,7 @@ template = "post.html"
 [taxonomies]
 tags = ["llm-workflows", "software-practices", "ai-ethics", "vibe-coding"]
 [extra]
+hero_image = "/images/robots-creation.png"
 summary = "Seven well-trodden objections to AI-assisted development, answered in plain English (with a splash of British sarcasm)."
 +++
 
