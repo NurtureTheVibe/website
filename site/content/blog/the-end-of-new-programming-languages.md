@@ -124,4 +124,4 @@ Almost everything above will also improve the usability of your project for huma
 
 It's all well and good to collect and publish this data, but how do you know how well it works? You train your own LLM and dogfood your work by pair-programming with it and seeing where it works and where it struggles.
 
-In a future blog post, we'll cover how to do this three-step process (CPT, SFT and DPO) on an open weights model like Mistral Small 24B, and we'll test it side by side against the base model for the language we're going to train it to understand.
+In the next blog post in the series, we discuss [how to start collecting data to train an LLM to write a new programming language](/blog/teach-llm-to-write-new-programming-language).
