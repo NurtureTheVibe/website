@@ -8,9 +8,7 @@ theme = "terminimal"
 compile_sass = true
 build_search_index = true
 
-taxonomies = [
-    {name = "tags"},
-]
+taxonomies = [{ name = "tags" }]
 
 [markdown]
 highlight_code = true
@@ -21,13 +19,14 @@ stylesheets = ["override.css"]
 accent_color = "green"
 copyright_html = "Copyright © 2025 Apogee Consultancy Ltd (UK Company no. 14246581) t/a Nurture the Vibe"
 menu_items = [
-    {name = "home", url = "$BASE_URL"},
-    {name = "tags", url = "$BASE_URL/tags"},
-    {name = "about", url = "$BASE_URL/about"},
-    {name = "github", url = "https://github.com/NurtureTheVibe", newtab = true},
-    {name = "x", url = "https://x.com/NurtureTheVibe", newtab = true},
-    {name = "youtube", url = "https://www.youtube.com/@NurturetheVibe", newtab = true},
-    {name = "linkedin", url = "https://www.linkedin.com/groups/13248013/", newtab = true}
+    { name = "home", url = "$BASE_URL" },
+    { name = "tags", url = "$BASE_URL/tags" },
+    { name = "about", url = "$BASE_URL/about" },
+    { name = "github", url = "https://github.com/NurtureTheVibe", newtab = true },
+    { name = "x", url = "https://x.com/NurtureTheVibe", newtab = true },
+    { name = "youtube", url = "https://www.youtube.com/@NurturetheVibe", newtab = true },
+    { name = "linkedin", url = "https://www.linkedin.com/groups/13248013/", newtab = true },
+    { name = "huggingface", url = "https://huggingface.co/nurturethevibe", newtab = true },
 ]
 enable_post_view_navigation = true
 post_view_navigation_prompt = "Read more"
